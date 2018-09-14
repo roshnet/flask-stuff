@@ -1,2 +1,2 @@
 # flask-stuff
-Flask related stuff, from learning to project-based-learning
+Flask related stuff, from plain learning to project-based-learning
