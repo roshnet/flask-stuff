@@ -1,0 +1,14 @@
+
+
+{% extends "base.html" %}
+
+{% block form_ui %}
+<form id="primary-form" method="POST" action="{{ url_for('process') }}">
+	<input type="text" name="user-name" placeholder="Your name here" />
+	<br/>
+	<input type="number" name="user-phone" placeholder="Your phone number"/>
+	<br/>
+	<input type="text" name="user-email" placeholder="Your Email Address"/>
+</form>
+<input form="primary-form" type="submit" value="Process my data"/>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block output_ui %}
+<br/>
+<hr color="blue"/>
+<h1>Here goes the output</h1>
+	<table>
+		<tr>
+			<td>Name</td>
+			<td>Email Address</td>
+			<td>Phone Number</td>
+		</tr>
+		<tr>
+			<tr>{{ data['name'] }}</tr>
+			<tr>{{ data['email'] }}</tr>
+			<tr>{{ data['phone'] }}</tr>
+		</tr>
+	</table>
+
+{% endblock %}
