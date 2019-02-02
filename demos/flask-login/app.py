@@ -46,11 +46,12 @@ def login():
         auth = False
         username = request.form['username']
         passwd = request.form['passwd']
+        login_user(User(1))    
+        next_page = request.args.get('next')
+        if not next_page:
+            next_page = url_for('index')
         if username == 'admin' and passwd == 'admin':
-            login_user(User(1))    
-            next_page = request.args.get('next')
-            if not next_page:
-                next_page = url_for('index')
+            login_user(User(1))
             print('=========================================================')
             print(next_page)
             print('=========================================================')
