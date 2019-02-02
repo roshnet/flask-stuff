@@ -1,20 +1,23 @@
 # Flask Login Demo..
 
 from flask import Flask
+from flask import request, flash, render_template
 from flask import session, url_for, redirect
 from flask_login import (
     LoginManager,
     UserMixin,
     login_user,
+    current_user,
     logout_user,
-    login_required
+    login_required,
+    login_url
 )
 
 app = Flask(__name__)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'unauth_message'
+login_manager.login_view = 'login'
 app.config['SECRET_KEY'] = 'some-secret-key'
 
 
@@ -30,34 +33,40 @@ class User(UserMixin):
 
 @app.route('/')
 def index():
-    return '''
-        <a href="/login/">Login</a>
-        <br>
-        <a href="/protected/">Protected</a>
-        <br>
-        <a href="/logout/">Log Out</a>
-        <br>
-    '''
+    return render_template('index.html')
 
 
-@app.route('/unauth_message')
-def unauth_message():
-    return 'Man, did you just try to fuck this site?'
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+
+    if request.method == 'GET':
+        return render_template('form.html')
+
+    if request.method == 'POST':
+        auth = False
+        username = request.form['username']
+        passwd = request.form['passwd']
+        if username == 'admin' and passwd == 'admin':
+            login_user(User(1))    
+            next_page = request.args.get('next')
+            if not next_page:
+                next_page = url_for('index')
+            print('=========================================================')
+            print(next_page)
+            print('=========================================================')
+            return redirect(next_page)
+        else:
+            return redirect("{}?next={}".format(url_for('login'), next_page))
 
 
-@app.route('/protected/')
+@app.route('/protected')
 @login_required
 def protected():
     return 'This shit is protected.'
 
 
-@app.route('/login/')
-def login():
-    login_user(User(1))
-    return 'Logged In'
-
-
-@app.route('/logout/')
+@app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return 'Logged Out'

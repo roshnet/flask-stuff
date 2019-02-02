@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Index</title>
+</head>
+<body>
+	<a href="{{ url_for('login') }}">Login</a>
+	<br>
+	<a href="{{ url_for('protected') }}">Protected (asks for login if not logged in).</a>
+	<br>
+	<a href="{{ url_for('logout') }}">Log Out (asks for login if not logged in).</a>
+	<br>
+</body>
+</html>
