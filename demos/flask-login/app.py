@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = ''
+login_manager.login_view = 'unauth_message'
 app.config['SECRET_KEY'] = 'some-secret-key'
 
 
@@ -20,6 +20,7 @@ def load_user(user_id):
 class User(UserMixin):
 	def __init__(self, id):
 		self.id = id
+
 
 @app.route('/')
 def index():
@@ -33,11 +34,15 @@ def index():
 	'''
 
 
+@app.route('/unauth_message')
+def unauth_message():
+	return 'Man, did you just try to fuck this site?'
+
+
 @app.route('/protected/')
 @login_required
 def protected():
-	return 'Protected Content'
-
+	return 'This shit is protected.'
 
 
 @app.route('/login/')
